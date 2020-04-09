@@ -38,7 +38,7 @@ public class CreateRoomScript : EditorWindow
             Debug.LogError("Dimentions must be 1 or more");
             return;
         }
-        GameObject parent = Instantiate(new GameObject());
+        GameObject parent = new GameObject();
         parent.name = parentObjectName;
         parent.transform.position = parentObjectLocation;
 
