@@ -4,22 +4,36 @@ Shader "Custom/testSurf" {
         }
     SubShader {
       Tags { "RenderType" = "Opaque" }
-        // Write the value 1 to the stencil buffer
-        Stencil {
-          Ref 0
-          Comp Less
-          Fail IncrSat
-        }
+
       CGPROGRAM
       #pragma surface surf Lambert
       struct Input {
           float4 color : COLOR;
       };
-      float4 _Color;
       void surf (Input IN, inout SurfaceOutput o) {
-          o.Albedo = _Color; // 1 = (1,1,1,1) = white
       }
       ENDCG
+
+      ZTest Greater
+
+      CGPROGRAM
+
+      #pragma target 3.0
+      #pragma surface surf Lambert //lambertian reflectance lighting version
+      //#pragma surface surf NoLighting //no lighting version
+
+      struct Input {
+        float4 color : COLOR;
+      };
+
+      float4 _Color;
+
+      void surf (Input IN, inout SurfaceOutput o) {
+         o.Albedo = _Color;
+      }
+
+      ENDCG
+
     }
     Fallback "Diffuse"
   }
