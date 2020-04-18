@@ -8,9 +8,6 @@ public class Raycast : MonoBehaviour
     private GameObject raycastedObj;
 
     [SerializeField]
-    GameObject interactionType;
-
-    [SerializeField]
     int rayLength = 10;
 
     [SerializeField]
@@ -34,7 +31,8 @@ public class Raycast : MonoBehaviour
 
                 if(Input.GetKeyDown(KeyCode.E))
                 {
-                    raycastedObj.SetActive(false);
+                    Debug.Log("GRAVITAS");
+                    raycastedObj.GetComponent<GravityObject>().gravityDirection = -raycastedObj.GetComponent<GravityObject>().gravityDirection;
                 }
             }
         }
