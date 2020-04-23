@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirstPersonMove : MonoBehaviour
 {
@@ -15,13 +16,20 @@ public class FirstPersonMove : MonoBehaviour
     [SerializeField]
     float jumpHeight = 3f;
 
+    [SerializeField]
+    Image indicator;
+
     public float _gravity = -10f;
 
-    private float _yAxisVelocity;
+    private float axisVelocity;
+
+    private bool upDown = true;
+    public bool gravDown = true;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        indicator.color = Color.gray;
     }
 
     private void Update()
@@ -36,14 +44,37 @@ public class FirstPersonMove : MonoBehaviour
                            vertical * moveSpeed * Time.deltaTime * transform.forward;
 
         if (characterController.isGrounded)
-            _yAxisVelocity = -0.5f;
+            axisVelocity = -0.5f;
 
 
         if (Input.GetKeyDown(KeyCode.Space) && characterController.isGrounded)
-            _yAxisVelocity = Mathf.Sqrt(jumpHeight * -2f * _gravity);
+            axisVelocity = Mathf.Sqrt(jumpHeight * -2f * _gravity);
 
-        _yAxisVelocity += _gravity * Time.deltaTime;
-        movement.y = _yAxisVelocity * Time.deltaTime;
+        if(Input.mouseScrollDelta.y < 0 || Input.mouseScrollDelta.y > 0)
+        {
+            gravDown = !gravDown;
+            if (gravDown)
+                indicator.color = Color.gray;
+            else
+                indicator.color = Color.blue;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && gravDown)
+        {
+            upDown = true;
+            _gravity = -_gravity;
+        }
+        else if(Input.GetKeyDown(KeyCode.Mouse1) && !gravDown)
+        {
+            upDown = false;
+            _gravity = -_gravity;
+        }
+
+        axisVelocity += _gravity * Time.deltaTime;
+        if(upDown)
+            movement.y = axisVelocity * Time.deltaTime;
+        else
+            movement.x = axisVelocity * Time.deltaTime;
 
         characterController.Move(movement);
     }

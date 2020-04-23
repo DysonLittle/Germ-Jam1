@@ -29,7 +29,7 @@ public class Raycast : MonoBehaviour
                 raycastedObj = hit.collider.gameObject;
                 CrosshairActive();
 
-                if(Input.GetKeyDown(KeyCode.E))
+                if(Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     Debug.Log("GRAVITAS");
                     raycastedObj.GetComponent<GravityObject>().gravityDirection = -raycastedObj.GetComponent<GravityObject>().gravityDirection;
