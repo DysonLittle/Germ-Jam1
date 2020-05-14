@@ -86,7 +86,8 @@ public class CameraScript : MonoBehaviour
             //resolve change in gravity, camera, etc.
             Quaternion newGrav = SnapQuat(cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation);
             worldRotation = newGrav;
-            player.SetGravVector(newGrav * Vector3.down);
+            //player.SetGravVector(newGrav * Vector3.down);
+            UpdateAllGravityObjects();
 
             Vector3 cameraDown = cameraRotation * Vector3.down;
             Vector3 worldDown = worldRotation * Vector3.down;
@@ -136,5 +137,16 @@ public class CameraScript : MonoBehaviour
         }
 
         return Quaternion.Euler(rotation);
+    }
+
+    void UpdateAllGravityObjects()
+    {
+        foreach (GravityObject i in GravityObject.gravityObjectList)
+        {
+            if (i.followCameraGravity)
+            {
+                i.gravityDirection = worldRotation * Vector3.down;
+            }
+        }
     }
 }
