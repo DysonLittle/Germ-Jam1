@@ -68,8 +68,13 @@ public class PlayerScript : MonoBehaviour
         rb.AddForce((parallelComponent + perpendicularComponent) * moveAccl * rb.mass);
     }
 
-    Vector3 GetGravVector()
+    public Vector3 GetGravVector()
     {
         return GetComponent<GravityObject>().gravityDirection;
+    }
+
+    public void SetGravVector(Vector3 vec)
+    {
+        GetComponent<GravityObject>().gravityDirection = vec;
     }
 }
