@@ -42,6 +42,66 @@ public class CreateRoomScript : EditorWindow
         parent.name = parentObjectName;
         parent.transform.position = parentObjectLocation;
 
+        //floor
+        GameObject tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(  0f,
+                                                                                                -dimentions.y / 2f,
+                                                                                                0f
+                                                                                                ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x, 0.1f, dimentions.z);
+        tempWall.name = "Floor";
+
+        //ceiling
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(     0f,
+                                                                                        dimentions.y / 2f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x, 0.1f, dimentions.z);
+        tempWall.name = "Ceiling";
+
+        //left wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(     -dimentions.x / 2f,
+                                                                                        0f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(0.1f, dimentions.y, dimentions.z);
+        tempWall.name = "Left Wall";
+
+        //right wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(     dimentions.x / 2f,
+                                                                                        0f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(0.1f, dimentions.y, dimentions.z);
+        tempWall.name = "Right Wall";
+
+        //far wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(     0f,
+                                                                                        0f,
+                                                                                        dimentions.z / 2f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x, dimentions.y, 0.1f);
+        tempWall.name = "Far Wall";
+
+        //near wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(     0f,
+                                                                                        0f,
+                                                                                        -dimentions.z / 2f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x, dimentions.y, 0.1f);
+        tempWall.name = "Near Wall";
+    }
+
+    private void SpawnBoxDef()
+    {
+        if (dimentions.x < 1 || dimentions.y < 1 || dimentions.z < 1)
+        {
+            Debug.LogError("Dimentions must be 1 or more");
+            return;
+        }
+        GameObject parent = new GameObject();
+        parent.name = parentObjectName;
+        parent.transform.position = parentObjectLocation;
+
         for (int i = 0; i < dimentions.x; i++)
         {
             for (int j = 0; j < dimentions.y; j++)
