@@ -43,6 +43,71 @@ public class CreateRoomScript : EditorWindow
         parent.transform.position = parentObjectLocation;
 
         //floor
+        GameObject tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(0f,
+                                                                                                -dimentions.y / 2f,
+                                                                                                0f
+                                                                                                ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.name = "Floor";
+
+        //ceiling
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(0f,
+                                                                                        dimentions.y / 2f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 180.0f));
+        tempWall.name = "Ceiling";
+
+        //left wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(-dimentions.x / 2f,
+                                                                                        0f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, -90.0f));
+        tempWall.name = "Left Wall";
+
+        //right wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(dimentions.x / 2f,
+                                                                                        0f,
+                                                                                        0f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.transform.rotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, 90.0f));
+        tempWall.name = "Right Wall";
+
+        //far wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(0f,
+                                                                                        0f,
+                                                                                        dimentions.z / 2f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.transform.rotation = Quaternion.Euler(new Vector3(-90.0f, 0.0f, 0.0f));
+        tempWall.name = "Far Wall";
+
+        //near wall
+        tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(0f,
+                                                                                        0f,
+                                                                                        -dimentions.z / 2f
+                                                                                        ), Quaternion.identity, parent.transform);
+        tempWall.transform.localScale = new Vector3(dimentions.x * 0.1f, 1.0f, dimentions.z * 0.1f);
+        tempWall.transform.rotation = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
+        tempWall.name = "Near Wall";
+    }
+
+    private void SpawnBoxDef2()
+    {
+        if (dimentions.x < 1 || dimentions.y < 1 || dimentions.z < 1)
+        {
+            Debug.LogError("Dimentions must be 1 or more");
+            return;
+        }
+        GameObject parent = new GameObject();
+        parent.name = parentObjectName;
+        parent.transform.position = parentObjectLocation;
+
+        //floor
         GameObject tempWall = Instantiate(wallPrefab, parent.transform.position + new Vector3(  0f,
                                                                                                 -dimentions.y / 2f,
                                                                                                 0f
