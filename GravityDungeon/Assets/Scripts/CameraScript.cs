@@ -48,8 +48,10 @@ public class CameraScript : MonoBehaviour
         ChangeLineRenderer();
     }
 
+    //checks mouse and scroll movement and move the camera accordingly
     void ChangeRotation()
     {
+        //rotate camera around origin, still facing origin
         float mouseX = Input.GetAxis("Mouse X") * sensitivity.x;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity.y;
 
@@ -57,10 +59,12 @@ public class CameraScript : MonoBehaviour
 
         rb.MoveRotation(cameraRotation);
 
+        //set the player forward and right vectors so that "forward" is away from the camera, etc. (player controls depend on camera direction)
         Vector3 forwardProj = Vector3.ProjectOnPlane(cameraRotation * Vector3.forward, worldRotation * Vector3.down);
         player.forwardVec = forwardProj.normalized;
         player.rightVec = Quaternion.AngleAxis(90, worldRotation * Vector3.up) * player.forwardVec;
 
+        //zoom in and out by transforming camera object relative to parent at origin
         float scroll = Input.GetAxis("Mouse ScrollWheel");
 
         cameraSpacing += scroll * sensitivity.z;
@@ -70,12 +74,13 @@ public class CameraScript : MonoBehaviour
         cameraObj.localPosition = new Vector3(0f, 0f, cameraSpacing);
     }
 
+    //checks right click controls for rotating gravity
     void CheckWorldRotation()
     {
         if (Input.GetMouseButtonDown(1))
         {
             changingWorldRotation = true;
-            grabAxis = cameraRotation;
+            grabAxis = cameraRotation; //grab axis a lock of cameraRotation, that will be compared to the released cameraRotation quat (as a delta quat, so to speak)
             axisLine.enabled = true;
         }
 
@@ -84,11 +89,12 @@ public class CameraScript : MonoBehaviour
             changingWorldRotation = false;
             axisLine.enabled = false;
             //resolve change in gravity, camera, etc.
-            Quaternion newGrav = SnapQuat(cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation);
+            Quaternion newGrav = SnapQuat(cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation);   //calculate new gravity and snap it
             worldRotation = newGrav;
-            //player.SetGravVector(newGrav * Vector3.down);
+
             UpdateAllGravityObjects();
 
+            //change the camera rotation so that its z is level with the ground
             Vector3 cameraDown = cameraRotation * Vector3.down;
             Vector3 worldDown = worldRotation * Vector3.down;
             Vector3 worldDownProj = Vector3.ProjectOnPlane(worldDown, cameraRotation * Vector3.forward);
@@ -99,6 +105,7 @@ public class CameraScript : MonoBehaviour
         }
     }
 
+    //rotate the red line renderer to indicate gravity selection
     void ChangeLineRenderer()
     {
         if (changingWorldRotation)
@@ -139,6 +146,7 @@ public class CameraScript : MonoBehaviour
         return Quaternion.Euler(rotation);
     }
 
+    //updates each GravityObject that has followCameraGravity set to true with the worldRotation
     void UpdateAllGravityObjects()
     {
         foreach (GravityObject i in GravityObject.gravityObjectList)
