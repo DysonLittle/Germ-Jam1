@@ -13,22 +13,25 @@ public class GravityObject : MonoBehaviour
     }
 
     public Vector3 gravityDirection = Vector3.down; //normalized vector that describes gravity
-    public static float g = 9.8f; //constant g
+    public static float g = 3.0f * 9.8f; //constant g
     public bool followCameraGravity = true; //determines whether or not the camera script will update the object gravity when the world rotation is changed
     Rigidbody rb;
 
-    ~GravityObject()
-    {
-        gravityObjectList.Remove(this); //remove from static list on destroy
-    }
+    
     private void Start()
     {
-        gravityObjectList.Add(this); //add to static list
         rb = gameObject.GetComponent<Rigidbody>();
+        gravityObjectList.Add(this); //add to static list
     }
+
     private void FixedUpdate()
     {
         //add constant gravity force
         rb.AddForce(rb.mass * gravityDirection * g);
+    }
+
+    private void OnDestroy()
+    {
+        gravityObjectList.Remove(this); //remove from static list on destroy
     }
 }

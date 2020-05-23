@@ -161,7 +161,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149770586}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -348,7 +348,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560356222}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -567,7 +567,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661230803}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -661,7 +661,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763075226}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -876,7 +876,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1345,7 +1345,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412109889}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -1539,7 +1539,7 @@ GameObject:
   - component: {fileID: 1695899930}
   - component: {fileID: 1695899927}
   - component: {fileID: 1695899925}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1616,7 +1616,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695899923}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 96ed010129700984cb658ffa051fb141, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1664,8 +1664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardVec: {x: 0, y: 0, z: 1}
   rightVec: {x: 1, y: 0, z: 0}
-  moveAccl: 100
-  termVel: 10
+  moveVelocity: 10
+  jumpForce: 300
 --- !u!1 &2034103699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1706,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2034103699}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bbe9fad1dd7e7834f85e19ae785c37b4, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
