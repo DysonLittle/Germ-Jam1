@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 398212094}
   m_Layer: 0
   m_Name: SampleGravityObject (Fixed Object)
-  m_TagString: Untagged
+  m_TagString: GravityObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 630608218}
   m_Layer: 0
   m_Name: SampleGravityObject (Constant Gravity)
-  m_TagString: Untagged
+  m_TagString: GravityObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -731,7 +731,7 @@ GameObject:
   - component: {fileID: 775832200}
   m_Layer: 0
   m_Name: SampleGravityObject (Constant Gravity) (1)
-  m_TagString: Untagged
+  m_TagString: GravityObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1415,7 +1415,7 @@ GameObject:
   - component: {fileID: 1526471089}
   m_Layer: 0
   m_Name: SampleGravityObject (Player Shared Gravity)
-  m_TagString: Untagged
+  m_TagString: GravityObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1539,6 +1539,8 @@ GameObject:
   - component: {fileID: 1695899930}
   - component: {fileID: 1695899927}
   - component: {fileID: 1695899925}
+  - component: {fileID: 1695899932}
+  - component: {fileID: 1695899931}
   m_Layer: 9
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -1588,7 +1590,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 196e3f096da75b142b32ef138de78c3d, type: 2}
+  - {fileID: 2100000, guid: cbb03eeab78a3bb4e9fbd9ff142d6ce0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1666,6 +1668,33 @@ MonoBehaviour:
   rightVec: {x: 1, y: 0, z: 0}
   moveVelocity: 10
   jumpForce: 300
+--- !u!135 &1695899931
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695899923}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1695899932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695899923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7edbf4f28a66e9a40b2f135c509613a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inCollider: []
+  selectable: {fileID: 0}
 --- !u!1 &2034103699
 GameObject:
   m_ObjectHideFlags: 0
