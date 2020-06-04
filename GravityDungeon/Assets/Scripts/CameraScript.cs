@@ -46,6 +46,8 @@ public class CameraScript : MonoBehaviour
         CheckWorldRotation();
         ChangeRotation();
         ChangeLineRenderer();
+
+        transform.position = player.transform.position;
     }
 
     //checks mouse and scroll movement and move the camera accordingly
