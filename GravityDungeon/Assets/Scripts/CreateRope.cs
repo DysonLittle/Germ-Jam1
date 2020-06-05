@@ -17,7 +17,7 @@ public class CreateRope : MonoBehaviour
 
 
         GameObject nextSeg;
-        SpringJoint joint;
+        ConfigurableJoint joint;
         Rigidbody attachBody = anchor.GetComponent<Rigidbody>();
         Vector3 attachLoc = anchorLoc;
         Vector3 segPt = attachPt + new Vector3(0, -1, 0); //
@@ -26,7 +26,7 @@ public class CreateRope : MonoBehaviour
         for(int i = 0; i < segments; i++)
         {
             nextSeg = Instantiate(prefabRope, segPt, Quaternion.identity);
-            joint = nextSeg.GetComponent<SpringJoint>();
+            joint = nextSeg.GetComponent<ConfigurableJoint>();
             joint.connectedBody = attachBody;
             joint.connectedAnchor = attachLoc;
 
