@@ -112,7 +112,8 @@ public class CameraScript : MonoBehaviour
     {
         if (changingWorldRotation)
         {
-            axisLine.SetPosition(1, cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation * axisLineDefaultPos);
+            axisLine.SetPosition(0, player.transform.position);
+            axisLine.SetPosition(1, player.transform.position + cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation * axisLineDefaultPos);
         }
     }
 
