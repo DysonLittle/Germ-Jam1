@@ -7,7 +7,7 @@ public class ObjectSwitching : MonoBehaviour
     [SerializeField]List<GameObject> inCollider;
     [SerializeField] GameObject selectable;
     bool isHolding = false;
-    float tempMass;
+    //float tempMass;
 
     // Start is called before the first frame update
     void Start()
@@ -26,16 +26,13 @@ public class ObjectSwitching : MonoBehaviour
                 {
                     isHolding = true;
                     selectable.transform.SetParent(gameObject.transform);
-                    selectable.GetComponent<Rigidbody>().isKinematic = true;
-                    tempMass = selectable.GetComponent<Rigidbody>().mass;
-                    selectable.GetComponent<Rigidbody>().mass = 0;
+                    selectable.GetComponent<Collider>().enabled = false;
                 }
                 else
                 {
                     isHolding = false;
                     selectable.transform.SetParent(null);
-                    selectable.GetComponent<Rigidbody>().isKinematic = false;
-                    selectable.GetComponent<Rigidbody>().mass = tempMass;
+                    selectable.GetComponent<Collider>().enabled = true;
                 }
             }
         }
