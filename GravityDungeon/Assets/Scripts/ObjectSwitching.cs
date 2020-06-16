@@ -43,19 +43,25 @@ public class ObjectSwitching : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("GravityObject"))
+        if (other.CompareTag("GravityObject"))
         {
             inCollider.Add(other.gameObject);
+        }
+    }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.CompareTag("GravityObject") && !isHolding)
+        {
             selectable = inCollider[0];
             for(int i = 0; i > inCollider.Count; i++)
             {
                 Vector3 origin = transform.position;
-                Vector3 target = inCollider[i].transform.position;
-                Vector3 targetOther = inCollider[i + 1].transform.position;
-                float dist = Mathf.Sqrt(Mathf.Pow(target.x - origin.x, 2) + Mathf.Pow(target.y - origin.y, 2));
-                float distOther = Mathf.Sqrt(Mathf.Pow(targetOther.x - origin.x, 2) + Mathf.Pow(targetOther.y - origin.y, 2));
-                if (dist < distOther)
+                Vector3 target = selectable.transform.position;
+                Vector3 targetOther = inCollider[i].transform.position;
+                float dist = Vector3.Distance(origin, target); //Mathf.Sqrt(Mathf.Pow(target.x - origin.x, 2) + Mathf.Pow(target.y - origin.y, 2));
+                float distOther = Vector3.Distance(origin, targetOther); //Mathf.Sqrt(Mathf.Pow(targetOther.x - origin.x, 2) + Mathf.Pow(targetOther.y - origin.y, 2));
+                if (dist > distOther)
                 {
                     selectable = inCollider[i];
                 }
