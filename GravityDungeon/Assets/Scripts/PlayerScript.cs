@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
     public float moveVelocity;
     public float jumpForce;
     Rigidbody rb;
-    bool grounded = false;
+    public bool grounded = false;
     bool jumping = false;
     Vector3 moveDir = Vector3.zero;
 

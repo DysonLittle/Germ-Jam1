@@ -43,7 +43,11 @@ public class CameraScript : MonoBehaviour
     
     void Update()
     {
-        CheckWorldRotation();
+        if(player.GetComponent<PlayerScript>().grounded)
+        {
+            CheckWorldRotation();
+        }
+        
         ChangeRotation();
         ChangeLineRenderer();
 
