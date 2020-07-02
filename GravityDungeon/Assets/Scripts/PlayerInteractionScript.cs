@@ -5,30 +5,42 @@ using UnityEngine;
 public class PlayerInteractionScript : MonoBehaviour
 {
     SphereCollider sc;
-    Interactable currentInteractableHover;
-    public Interactable currentInteractableSelected;
+    Interactable closestInteractable;
+    [HideInInspector]
+    public Interactable heldObject;
+
+    public GameObject hoverPromptPrefab;
+    GameObject hoverPromptObj;
+    GameObject canvas;
     void Start()
     {
+        canvas = GameObject.Find("Canvas");
         sc = GetComponents<SphereCollider>()[1]; //get the second, larger one, used for interactable objects
-        currentInteractableHover = null;
-        currentInteractableSelected = null;
+        closestInteractable = null;
+        heldObject = null;
     }
 
     void Update()
     {
-        if (!currentInteractableSelected)
-            FindInteractables();
+        FindInteractables();
         CheckSelection();
+
+        if (hoverPromptObj)
+            hoverPromptObj.transform.position = GetCanvasSpaceFromWorldSpace(closestInteractable.transform.position);
     }
 
     void CheckSelection()
     {
-        if (Input.GetKeyDown(KeyCode.E) && currentInteractableHover)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            currentInteractableSelected = currentInteractableHover;
-            UpdateCurrentInteractableHover(null);
-            currentInteractableSelected.Interact(gameObject);
-            
+            if (closestInteractable)
+            {
+                closestInteractable.Interact(gameObject);
+            }
+            else if (heldObject)
+            {
+                heldObject.StopInteracting(gameObject);
+            }
         }
     }
 
@@ -38,49 +50,58 @@ public class PlayerInteractionScript : MonoBehaviour
         
         if (colliderHits.Length == 0) //no gameObjects in sphere
         {
-            UpdateCurrentInteractableHover(null);
+            UpdateclosestInteractable(null);
             return;
         }
 
-        GameObject closestInteractable = null;
+        GameObject closestObj = null;
         for (int i = 0; i < colliderHits.Length; i++)
         {
             GameObject currentObj = colliderHits[i].gameObject;
-            if (currentObj.GetComponent<Interactable>())
+            if (currentObj.GetComponent<Interactable>() && currentObj.GetComponent<Interactable>().CanInteract(gameObject) && currentObj != heldObject)
             {
-                if (!closestInteractable)
+                if (!closestObj)
                 {
-                    closestInteractable = currentObj;
+                    closestObj = currentObj;
                 }
-                else if((currentObj.transform.position - sc.center - transform.position).sqrMagnitude < (closestInteractable.transform.position - sc.center - transform.position).sqrMagnitude)
+                else if((currentObj.transform.position - sc.center - transform.position).sqrMagnitude < (closestObj.transform.position - sc.center - transform.position).sqrMagnitude)
                 {
-                    closestInteractable = currentObj;
+                    closestObj = currentObj;
                 }
             }
         }
 
-        if (!closestInteractable) //no interactables found
+        if (!closestObj) //no interactables found
         {
-            UpdateCurrentInteractableHover(null);
+            UpdateclosestInteractable(null);
             return;
         }
 
-        UpdateCurrentInteractableHover(closestInteractable.GetComponent<Interactable>());
+        UpdateclosestInteractable(closestObj.GetComponent<Interactable>());
     }
 
-    void UpdateCurrentInteractableHover(Interactable newInteractable)
+    void UpdateclosestInteractable(Interactable newInteractable)
     {
-        if (newInteractable == currentInteractableHover)
+        if (newInteractable == closestInteractable)
             return;
 
-        if (currentInteractableHover)
+        if (closestInteractable)
         {
-            currentInteractableHover.Hover(false);
+            Destroy(hoverPromptObj);
+            hoverPromptObj = null;
         }
-        currentInteractableHover = newInteractable;
-        if (currentInteractableHover)
+        closestInteractable = newInteractable;
+        if (closestInteractable)
         {
-            currentInteractableHover.Hover();
+            hoverPromptObj = Instantiate(hoverPromptPrefab, canvas.transform);
+            hoverPromptObj.transform.position = GetCanvasSpaceFromWorldSpace(closestInteractable.transform.position);
         }
+    }
+
+    Vector3 GetCanvasSpaceFromWorldSpace(Vector3 worldSpace)
+    {
+        Vector3 viewSpaceVec = Camera.main.WorldToViewportPoint(worldSpace);
+        Vector2 sizeDelta = canvas.GetComponent<RectTransform>().sizeDelta;
+        return new Vector3(viewSpaceVec.x * sizeDelta.x, viewSpaceVec.y * sizeDelta.y, 0);
     }
 }

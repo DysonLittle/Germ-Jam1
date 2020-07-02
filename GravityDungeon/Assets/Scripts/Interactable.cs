@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
+    public abstract bool CanInteract(GameObject player);
     public abstract void Interact(GameObject player);
-    public abstract void Hover(bool toggle = true);
+    public void StopInteracting(GameObject player)
+    {
+    }
 }

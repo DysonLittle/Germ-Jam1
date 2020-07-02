@@ -90,7 +90,7 @@ public class CameraScript : MonoBehaviour
             axisLine.enabled = true;
         }
 
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) && changingWorldRotation)
         {
             changingWorldRotation = false;
             axisLine.enabled = false;
