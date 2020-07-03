@@ -22,10 +22,8 @@ public class PickupScript : Interactable
         p.heldObject = this;
 
         //actually pick up (physics)
-        gameObject.transform.SetParent(player.transform);
-        gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.GetComponent<Collider>().enabled = false;
+        gameObject.AddComponent<FixedJoint>();
+        gameObject.GetComponent<FixedJoint>().connectedBody = player.GetComponent<Rigidbody>();
 
     }
 
@@ -37,14 +35,11 @@ public class PickupScript : Interactable
 
     public override void StopInteracting(GameObject player)
     {
-        //register as held object
+        //unregister as held object
         PlayerInteractionScript p = player.GetComponent<PlayerInteractionScript>();
         p.heldObject = null;
 
-        //actually pick up (physics)
-        gameObject.transform.SetParent(null);
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
-        gameObject.GetComponent<Collider>().enabled = true;
+        //actually put down (physics)
+        Destroy(gameObject.GetComponent<FixedJoint>());
     }
 }
