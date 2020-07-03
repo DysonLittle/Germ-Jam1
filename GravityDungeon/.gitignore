@@ -61,3 +61,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+# Probuilder dumb stuff
+/[Pp]rojectSettings/[Pp]ackages/com.unity.probuilder/Settings.json
