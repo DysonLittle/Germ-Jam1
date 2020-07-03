@@ -7,12 +7,12 @@ public class LeverScript : Interactable
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
-        
+
     }
 
     public override void Interact(GameObject player)
@@ -22,6 +22,7 @@ public class LeverScript : Interactable
 
     public override bool CanInteract(GameObject player)
     {
-        return true;
+        PlayerInteractionScript p = player.GetComponent<PlayerInteractionScript>();
+        return p.heldObject == null;
     }
 }

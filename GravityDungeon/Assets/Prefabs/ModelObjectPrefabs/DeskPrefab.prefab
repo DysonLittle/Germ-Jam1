@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 6246932691510774606}
   - component: {fileID: 6246932691510774601}
   - component: {fileID: 6246932691510774607}
+  - component: {fileID: -5557686627946387291}
   m_Layer: 0
-  m_Name: desk_06-05-20
+  m_Name: DeskPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,3 +127,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityDirection: {x: 0, y: -1, z: 0}
   followCameraGravity: 1
+--- !u!114 &-5557686627946387291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706801061864836941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7484d720cff4eb248b6f290086bbabee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

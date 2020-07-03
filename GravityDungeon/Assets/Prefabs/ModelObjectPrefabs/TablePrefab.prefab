@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 4681566605845394745}
   - component: {fileID: 4681566605845394744}
   - component: {fileID: 4681566605845394746}
+  - component: {fileID: -7852189032637984240}
   m_Layer: 0
-  m_Name: tableOcto_06_11_20
+  m_Name: TablePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,3 +127,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityDirection: {x: 0, y: -1, z: 0}
   followCameraGravity: 1
+--- !u!114 &-7852189032637984240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736203253547083143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7484d720cff4eb248b6f290086bbabee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
