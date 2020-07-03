@@ -1,6 +1,6 @@
 ﻿Shader "Custom/WorldSpaceTexture" {
     Properties{
-        _MainTex("Albedo(RGB)", 2D) = "white" {}
+        _MainTex("Texture", 2D) = "white" {}
     }
 
         SubShader{
@@ -64,11 +64,9 @@
                 float4 transformQuat = get2VecQuat(IN.worldNormal, float3(0, 0, -1));
                 float3 transformedVec = rotateByQuat(transformQuat, IN.worldPos);
 
-                float4 sampleColor = tex2D(_MainTex, transformedVec.xy / _MainTex_ST);
+                float4 sampleColor = tex2D(_MainTex, transformedVec.xy * _MainTex_ST);
 
                 o.Albedo = sampleColor;
-
-                o.Emission = o.Albedo;
             }
 
             ENDCG
