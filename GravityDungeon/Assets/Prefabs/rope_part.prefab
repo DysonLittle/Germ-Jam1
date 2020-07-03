@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5991260751528764819}
   - component: {fileID: 5991260751528764818}
   - component: {fileID: 2301970895999311154}
+  - component: {fileID: -7118690033166523935}
   m_Layer: 0
   m_Name: rope_part
   m_TagString: GravityObject
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20969fdc89e99c745a6849efb62d18ff, type: 2}
+  - {fileID: 2100000, guid: 799da00aaa5d50845a5f6ae02511e588, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -221,3 +222,15 @@ ConfigurableJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &-7118690033166523935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991260751528764820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af181477a9bee884b83b1526d3ed2dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
