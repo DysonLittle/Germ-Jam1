@@ -18,6 +18,7 @@ public class LeverScript : Interactable
     public override void Interact(GameObject player)
     {
         Debug.Log("Pull the lever, Kronk!");
+        transform.GetChild(0).GetComponent<Animator>().SetTrigger("ToggleLever");
     }
 
     public override bool CanInteract(GameObject player)
