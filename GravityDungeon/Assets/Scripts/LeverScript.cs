@@ -5,9 +5,13 @@ using UnityEngine;
 public class LeverScript : Interactable
 {
 
+    public GameObject toggleableObject;
+    Toggleable toggleScript;
+    bool toggle = false;
+
     private void Start()
     {
-
+        toggleScript = toggleableObject.GetComponent<Toggleable>();
     }
 
     private void Update()
@@ -17,7 +21,15 @@ public class LeverScript : Interactable
 
     public override void Interact(GameObject player)
     {
-        Debug.Log("Pull the lever, Kronk!");
+        toggle = !toggle;
+        if (toggleScript)
+        {
+            toggleScript.Toggle(toggle);
+        }
+        else
+        {
+            throw new System.Exception(toggleableObject.name + " does not have Toggleable script attached.");
+        }
         transform.GetChild(0).GetComponent<Animator>().SetTrigger("ToggleLever");
     }
 

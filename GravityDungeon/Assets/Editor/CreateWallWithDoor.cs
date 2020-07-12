@@ -50,7 +50,7 @@ public class CreateWallWithDoor : EditorWindow
         parent.transform.position = parentObjectLocation;
 
         GameObject door = Instantiate(doorPrefab, parent.transform);
-        CreateWallFromCorners(door, doorLocation + doorDimentions / 2, doorLocation - doorDimentions / 2);
+        CreateDoorFromCorners(door, doorLocation + doorDimentions / 2, doorLocation - doorDimentions / 2);
         door.name = "Door";
 
         //helper vars for math
@@ -85,5 +85,12 @@ public class CreateWallWithDoor : EditorWindow
     {
         wall.transform.localScale = new Vector3(Mathf.Abs(corner1.x - corner2.x) / 10, 1, Mathf.Abs(corner1.y - corner2.y) / 10);
         wall.transform.localPosition = new Vector3((corner1.x + corner2.x) / 2, 0, (corner1.y + corner2.y) / 2);
+    }
+
+    void CreateDoorFromCorners(GameObject door, Vector2 corner1, Vector2 corner2)
+    {
+        door.transform.localScale = new Vector3(Mathf.Abs(corner1.x - corner2.x), Mathf.Abs(corner1.y - corner2.y) / 2, 1);
+        door.transform.localPosition = new Vector3((corner1.x + corner2.x) / 2, 0, (corner1.y + corner2.y) / 2);
+        door.transform.localRotation = Quaternion.Euler(new Vector3(90, 0, 0));
     }
 }
