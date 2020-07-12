@@ -24,6 +24,10 @@ public class CameraScript : MonoBehaviour
     LineRenderer axisLine;
     Vector3 axisLineDefaultPos = Vector3.down * 50;
 
+    //for coroutine
+    float lerpTotalTime = 1f;
+    int lerpTotalSteps = 100;
+
     void Start()
     {
         player = GameObject.Find("PlayerCharacter").GetComponent<PlayerScript>();
@@ -101,13 +105,27 @@ public class CameraScript : MonoBehaviour
             UpdateAllGravityObjects();
 
             //change the camera rotation so that its z is level with the ground
-            Vector3 cameraDown = cameraRotation * Vector3.down;
-            Vector3 worldDown = worldRotation * Vector3.down;
-            Vector3 worldDownProj = Vector3.ProjectOnPlane(worldDown, cameraRotation * Vector3.forward);
-            float adjustmentAngle = Vector3.SignedAngle(cameraDown, worldDownProj, cameraRotation * Vector3.forward);
+            StartCoroutine("UpdateZRot");
 
-            cameraRotation = cameraRotation * Quaternion.AngleAxis(adjustmentAngle, Vector3.forward);
+        }
+    }
+
+    Quaternion GetLevelQuat()
+    {
+        Vector3 cameraDown = cameraRotation * Vector3.down;
+        Vector3 worldDown = worldRotation * Vector3.down;
+        Vector3 worldDownProj = Vector3.ProjectOnPlane(worldDown, cameraRotation * Vector3.forward);
+        float adjustmentAngle = Vector3.SignedAngle(cameraDown, worldDownProj, cameraRotation * Vector3.forward);
+        return cameraRotation * Quaternion.AngleAxis(adjustmentAngle, Vector3.forward);
+    }
+
+    IEnumerator UpdateZRot()
+    {
+        for (float i = 0; i < 1; i += 1.0f / (float)lerpTotalSteps)
+        {
+            cameraRotation = Quaternion.Lerp(cameraRotation, GetLevelQuat(), i);
             rb.MoveRotation(cameraRotation);
+            yield return new WaitForSeconds(lerpTotalTime / (float)lerpTotalSteps);
         }
     }
 
