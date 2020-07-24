@@ -5,8 +5,8 @@ using UnityEngine;
 public class ObjectSwitching : MonoBehaviour
 {
     [SerializeField]List<GameObject> inCollider;
-    [SerializeField] GameObject selectable;
-    bool isHolding = false;
+    public GameObject selectable;
+    public bool isHolding = false;
     float tempMass;
 
     // Start is called before the first frame update

@@ -28,6 +28,9 @@ public class CameraScript : MonoBehaviour
     float lerpTotalTime = 1f;
     int lerpTotalSteps = 100;
 
+    //for object switching
+    ObjectSwitching objSwitch;
+
     void Start()
     {
         player = GameObject.Find("PlayerCharacter").GetComponent<PlayerScript>();
@@ -42,6 +45,7 @@ public class CameraScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         axisLine = GetComponent<LineRenderer>();
         axisLine.enabled = false;
+        objSwitch = GetComponent<ObjectSwitching>();
     }
 
     
@@ -87,7 +91,7 @@ public class CameraScript : MonoBehaviour
     //checks right click controls for rotating gravity
     void CheckWorldRotation()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0) && Input.GetMouseButtonDown(1))
         {
             changingWorldRotation = true;
             grabAxis = cameraRotation; //grab axis a lock of cameraRotation, that will be compared to the released cameraRotation quat (as a delta quat, so to speak)
@@ -108,6 +112,13 @@ public class CameraScript : MonoBehaviour
             StartCoroutine("UpdateZRot");
 
         }
+        /*else if(Input.GetMouseButtonUp(0) && objSwitch.isHolding && changingWorldRotation)
+        {
+            changingWorldRotation = false;
+            axisLine.enabled = false;
+            Quaternion newGrav = SnapQuat(cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation);   //calculate new gravity and snap it
+            
+        }*/
     }
 
     Quaternion GetLevelQuat()
