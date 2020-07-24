@@ -17,6 +17,8 @@ public class PlayerScript : MonoBehaviour
     Vector3 moveDir = Vector3.zero;
 
     GravityObject grav;
+
+    public float airControl = 0.1f;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -102,7 +104,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            rb.AddForce((velDiff / Time.fixedDeltaTime) * rb.mass * 0.1f);
+            rb.AddForce((velDiff / Time.fixedDeltaTime) * rb.mass * airControl);
         }
 
         if (jumping)
