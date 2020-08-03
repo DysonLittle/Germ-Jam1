@@ -91,7 +91,7 @@ public class CameraScript : MonoBehaviour
     //checks right click controls for rotating gravity
     void CheckWorldRotation()
     {
-        if (Input.GetMouseButtonDown(0) && Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             changingWorldRotation = true;
             grabAxis = cameraRotation; //grab axis a lock of cameraRotation, that will be compared to the released cameraRotation quat (as a delta quat, so to speak)

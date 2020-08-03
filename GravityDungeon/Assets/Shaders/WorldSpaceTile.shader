@@ -31,17 +31,6 @@
                 float3 worldPos;
             };
 
-            /*float3 project(float3 vec, float3 onto)
-            {
-                float ontoLength = length(onto);
-                return onto * (dot(vec, onto) / (ontoLength * ontoLength));
-            }
-
-            float3 projectOntoPlane(float3 vec, float3 ontoNormal)
-            {
-                return vec - project(vec, ontoNormal);
-            }*/
-
             float4 axisAngleQuat(float3 axis, float angle)
             {
                 float4 quat;
@@ -54,14 +43,17 @@
                 return quat;
             }
 
-            float4 get2VecQuat(float3 vecFrom, float3 vecTo)
+            bool isCloseTo(float3 firstVec, float3 secondVec)
             {
-                float3 vecCross = cross(vecFrom, vecTo);
-                if (all(vecCross == float3(0, 0, 0)))
-                {
-                    return float4(0, 0, 0, 1);
-                }
-                return axisAngleQuat(normalize(vecCross), acos(dot(vecFrom, vecTo)));
+                return length(firstVec - secondVec) < 0.00001f;
+            }
+
+            float4 get2VecQuat(float3 vecFrom)
+            {
+                float3 vecCross = cross(vecFrom, float3(0, 0, -1));
+                bool zeroCheck = all(vecCross == float3(0.0f, 0.0f, 0.0f)) || isCloseTo(vecFrom, float3(0.0f, 0.0f, -1.0f));
+
+                return zeroCheck ? float4(0, 0, 0, 1) : axisAngleQuat(normalize(vecCross), acos(dot(vecFrom, float3(0, 0, -1))));
             }
 
             float3 rotateByQuat(float4 quat, float3 vec)
@@ -72,8 +64,9 @@
             }
 
             void surf(Input IN, inout SurfaceOutputStandard o) {
-
-                float4 transformQuat = get2VecQuat(IN.worldNormal, float3(0, 0, -1));
+                
+                float3 norm = IN.worldNormal;
+                float4 transformQuat = get2VecQuat(normalize(norm));
                 float3 transformedVec = rotateByQuat(transformQuat, IN.worldPos);
 
                 float4 sampleColor = tex2D(_MainTex, transformedVec.xy * _MainTex_ST);

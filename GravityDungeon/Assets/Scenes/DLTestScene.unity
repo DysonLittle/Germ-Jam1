@@ -3209,6 +3209,7 @@ MonoBehaviour:
   moveVelocity: 10
   jumpForce: 300
   grounded: 0
+  airControl: 0.1
 --- !u!135 &1695899931
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3236,6 +3237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inCollider: []
   selectable: {fileID: 0}
+  isHolding: 0
 --- !u!114 &1695899933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3581,7 +3583,7 @@ PrefabInstance:
     - target: {fileID: 397144462029215636, guid: 659b64324adfb2a41a132143487fbbb4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.77
+      value: -8.9
       objectReference: {fileID: 0}
     - target: {fileID: 397144462029215636, guid: 659b64324adfb2a41a132143487fbbb4,
         type: 3}
@@ -4036,7 +4038,7 @@ PrefabInstance:
     - target: {fileID: 4267772677737948849, guid: 23c87926bfdd5824997b1ee326f5b1cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.778
+      value: -8.62
       objectReference: {fileID: 0}
     - target: {fileID: 4267772677737948849, guid: 23c87926bfdd5824997b1ee326f5b1cd,
         type: 3}
