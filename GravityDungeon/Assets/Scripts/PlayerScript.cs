@@ -115,7 +115,18 @@ public class PlayerScript : MonoBehaviour
 
     void CheckGrounded()
     {
-        grounded = Physics.Raycast(transform.position, transform.TransformDirection(GetGravVector()), 1.1f);
+        RaycastHit rc;
+        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(GetGravVector()),out rc, 1.1f);
+        //addresses bug where you could jump on an object you were holding
+        Interactable held = GetComponent<PlayerInteractionScript>().heldObject;
+        if (held)
+        {
+            grounded = hit && rc.transform.gameObject != GetComponent<PlayerInteractionScript>().heldObject.gameObject;
+        }
+        else
+        {
+            grounded = hit;
+        }
     }
 
     void CheckJump()
@@ -131,5 +142,20 @@ public class PlayerScript : MonoBehaviour
     public void SetGravVector(Vector3 vec)
     {
         grav.gravityDirection = vec;
+    }
+
+    public bool GetCanChangeGrav()
+    {
+        RaycastHit rc;
+        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(GetGravVector()), out rc, 1.1f);
+        if (hit)
+        {
+            SpecialSurfaceScript surface = rc.transform.gameObject.GetComponent<SpecialSurfaceScript>();
+            return !surface || !surface.prohibitGravityChanging;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
