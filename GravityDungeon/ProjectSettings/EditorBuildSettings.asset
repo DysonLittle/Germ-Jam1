@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/TitleScreen.unity
+    guid: 3a4086b2ba4f3fd4ea907a539ea912b7
+  - enabled: 1
+    path: Assets/Scenes/Petra's Puzzle Tests/PetraPuzzleTest1.unity
+    guid: c0d52d41b4e60eb45b17773d5c0aa158
   m_configObjects: {}
