@@ -33,12 +33,11 @@ public class RopeInteractScript : Interactable
             p.heldObject.StopInteracting(player);
         }
 
-
-
-        //actually pick up (physics)
-        gameObject.AddComponent<FixedJoint>();
-        gameObject.GetComponent<FixedJoint>().connectedBody = toAttach.GetComponent<Rigidbody>();
-
+        ConfigurableJoint cjoint = gameObject.AddComponent<ConfigurableJoint>();
+        cjoint.connectedBody = toAttach.GetComponent<Rigidbody>();
+        cjoint.xMotion = ConfigurableJointMotion.Limited;
+        cjoint.yMotion = ConfigurableJointMotion.Limited;
+        cjoint.zMotion = ConfigurableJointMotion.Limited;
     }
 
     public override bool CanInteract(GameObject player)
@@ -57,6 +56,14 @@ public class RopeInteractScript : Interactable
         p.heldObject = null;
 
         //actually put down (physics)
-        Destroy(gameObject.GetComponent<FixedJoint>());
+        ConfigurableJoint[] cjoints = gameObject.GetComponents<ConfigurableJoint>();
+        foreach(ConfigurableJoint cjoint in cjoints)
+        {
+            if(cjoint.connectedBody == player.GetComponent<Rigidbody>())
+            {
+                Destroy(cjoint);
+                break;
+            }
+        }
     }
 }
