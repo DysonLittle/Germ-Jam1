@@ -44,7 +44,9 @@ public class CreateRope : EditorWindow
             ConfigurableJoint joint;
             Rigidbody attachBody = anchor.GetComponent<Rigidbody>();
             Vector3 attachLoc = anchorLocation;
-            Vector3 segPt = attachPt + new Vector3(0, -1, 0); //
+            Vector3 localOffset = ropePrefab.GetComponent<ConfigurableJoint>().anchor;
+            Vector3 globalOffset = ropePrefab.transform.TransformPoint(localOffset) - ropePrefab.transform.position;
+            Vector3 segPt = attachPt - globalOffset; //
 
 
             for(int i = 0; i < segments; i++)
@@ -55,8 +57,8 @@ public class CreateRope : EditorWindow
                 joint.connectedAnchor = attachLoc;
 
                 attachBody = nextSeg.GetComponent<Rigidbody>();
-                attachLoc = new Vector3(0, -1, 0);
-                segPt = segPt + new Vector3(0, -2, 0); //below the previous segment
+                attachLoc = -localOffset;
+                segPt = segPt - 2 *  globalOffset; //below the previous segment
             }
         }
 }
