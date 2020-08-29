@@ -5,17 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class TerrainHazardScript : MonoBehaviour
 {
-    GameObject player;
+    GameObject player; //shouldn't be needed anymore
     GameObject sceneManager;
     void Start()
     {
-        player = GameObject.Find("PlayerCharacter");
+        player = GameObject.Find("PlayerCharacter"); //shouldn't be needed anymore
         sceneManager = GameObject.Find("SceneManager");
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject == player)
+        if (collision.collider.tag == "Player")
         {
             PlayerDeath();
         }

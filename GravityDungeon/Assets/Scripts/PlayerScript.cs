@@ -13,8 +13,9 @@ public class PlayerScript : MonoBehaviour
     public float jumpForce;
     Rigidbody rb;
     public bool grounded = false;
-    bool jumping = false;
+    float jumpingCooldown = 0.0f;
     Vector3 moveDir = Vector3.zero;
+
 
     GravityObject grav;
 
@@ -30,6 +31,7 @@ public class PlayerScript : MonoBehaviour
         CheckMove();
         CheckGrounded();
         CheckJump();
+        ChangeModelRotation();
     }
     void FixedUpdate()
     {
@@ -106,32 +108,49 @@ public class PlayerScript : MonoBehaviour
         {
             rb.AddForce((velDiff / Time.fixedDeltaTime) * rb.mass * airControl);
         }
-
-        if (jumping)
-        {
-            rb.AddForce(-GetGravVector() * jumpForce);
-        }
     }
 
     void CheckGrounded()
     {
-        RaycastHit rc;
-        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(GetGravVector()),out rc, 1.1f);
-        //addresses bug where you could jump on an object you were holding
-        Interactable held = GetComponent<PlayerInteractionScript>().heldObject;
-        if (held)
+        for (int x = -1; x < 2; x++) //test nine points at the base of the player character
         {
-            grounded = hit && rc.transform.gameObject != GetComponent<PlayerInteractionScript>().heldObject.gameObject;
-        }
-        else
-        {
-            grounded = hit;
+            for (int z = -1; z < 2; z++)
+            {
+                Vector3 offset = new Vector3(x, 0, z) * 0.5f; //halved because of the scale of our model (the capsule extends .5 in each direction)
+                RaycastHit rc;
+                bool hit = Physics.Raycast(transform.position + offset, GetGravVector(), out rc, 2.0f);
+
+                //addresses bug where you could jump on an object you were holding
+                Interactable held = GetComponent<PlayerInteractionScript>().heldObject;
+                if (held)
+                {
+                    grounded = hit && rc.transform.gameObject != GetComponent<PlayerInteractionScript>().heldObject.gameObject;
+                }
+                else
+                {
+                    grounded = hit;
+                }
+
+                if (grounded)
+                    return; //only one needs to be grounded
+            }
         }
     }
 
     void CheckJump()
     {
-        jumping = grounded && Input.GetKey(KeyCode.Space);
+        if (jumpingCooldown <= 0.0f)
+        {
+            if (grounded && Input.GetKey(KeyCode.Space))
+            {
+                jumpingCooldown = 0.5f;
+                rb.AddForce(-GetGravVector() * jumpForce);
+            }
+        }
+        else
+        {
+            jumpingCooldown -= Time.deltaTime;
+        }
     }
 
     public Vector3 GetGravVector()
@@ -147,7 +166,7 @@ public class PlayerScript : MonoBehaviour
     public bool GetCanChangeGrav()
     {
         RaycastHit rc;
-        bool hit = Physics.Raycast(transform.position, transform.TransformDirection(GetGravVector()), out rc, 1.1f);
+        bool hit = Physics.Raycast(transform.position, GetGravVector(), out rc, 2.0f);
         if (hit)
         {
             SpecialSurfaceScript surface = rc.transform.gameObject.GetComponent<SpecialSurfaceScript>();
@@ -157,5 +176,16 @@ public class PlayerScript : MonoBehaviour
         {
             return false;
         }
+    }
+
+    void ChangeModelRotation()
+    {
+        transform.rotation = Quaternion.LookRotation(forwardVec, -GetGravVector());
+    }
+
+
+    float Vector2ToAngle(Vector2 vec)
+    {
+        return Vector2.SignedAngle(Vector2.right, vec);
     }
 }

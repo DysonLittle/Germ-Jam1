@@ -15,7 +15,7 @@ public class PlayerInteractionScript : MonoBehaviour
     void Start()
     {
         canvas = GameObject.Find("Canvas");
-        sc = GetComponents<SphereCollider>()[1]; //get the second, larger one, used for interactable objects
+        sc = GetComponent<SphereCollider>(); //get the second, larger one, used for interactable objects
         closestInteractable = null;
         heldObject = null;
     }
@@ -46,7 +46,7 @@ public class PlayerInteractionScript : MonoBehaviour
 
     void FindInteractables()
     {
-        Collider[] colliderHits = Physics.OverlapSphere(sc.center + transform.position, sc.radius);
+        Collider[] colliderHits = Physics.OverlapSphere(sc.center + transform.position, sc.radius * transform.localScale.x);
         
         if (colliderHits.Length == 0) //no gameObjects in sphere
         {

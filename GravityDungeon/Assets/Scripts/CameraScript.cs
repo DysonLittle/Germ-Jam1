@@ -33,7 +33,7 @@ public class CameraScript : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.Find("PlayerCharacter").GetComponent<PlayerScript>();
+        player = GameObject.Find("PlayerCharacter1").GetComponent<PlayerScript>();
         cameraObj = transform.GetChild(0);
         rb = GetComponent<Rigidbody>();
         cameraSpacing = cameraSpacingDefault;
