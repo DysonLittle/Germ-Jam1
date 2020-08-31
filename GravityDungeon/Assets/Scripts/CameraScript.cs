@@ -29,7 +29,8 @@ public class CameraScript : MonoBehaviour
     int lerpTotalSteps = 100;
 
     //for object switching
-    ObjectSwitching objSwitch;
+    PlayerInteractionScript playerIntr;
+    bool changingObjectRotation;
 
     void Start()
     {
@@ -45,13 +46,14 @@ public class CameraScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         axisLine = GetComponent<LineRenderer>();
         axisLine.enabled = false;
-        objSwitch = GetComponent<ObjectSwitching>();
+        playerIntr = GameObject.Find("PlayerCharacter1").GetComponent<PlayerInteractionScript>();
+        changingObjectRotation = false;
     }
 
     
     void Update()
     {
-        if(player.GetComponent<PlayerScript>().grounded)
+        if (player.GetComponent<PlayerScript>().grounded)
         {
             CheckWorldRotation();
         }
@@ -97,8 +99,14 @@ public class CameraScript : MonoBehaviour
             grabAxis = cameraRotation; //grab axis a lock of cameraRotation, that will be compared to the released cameraRotation quat (as a delta quat, so to speak)
             axisLine.enabled = true;
         }
+        else if(Input.GetMouseButtonDown(0) && playerIntr.heldObject)
+        {
+            changingObjectRotation = true;
+            grabAxis = cameraRotation;
+            axisLine.enabled = true;
+        }
 
-        if (Input.GetMouseButtonUp(1) && changingWorldRotation)
+        if (Input.GetMouseButtonUp(1) && changingWorldRotation && !changingObjectRotation)
         {
             changingWorldRotation = false;
             axisLine.enabled = false;
@@ -112,13 +120,18 @@ public class CameraScript : MonoBehaviour
             StartCoroutine("UpdateZRot");
 
         }
-        /*else if(Input.GetMouseButtonUp(0) && objSwitch.isHolding && changingWorldRotation)
+        else if(Input.GetMouseButtonUp(0) && changingObjectRotation && !changingWorldRotation)
         {
-            changingWorldRotation = false;
+            changingObjectRotation = false;
             axisLine.enabled = false;
+            playerIntr.heldObject.GetComponent<GravityObject>().followCameraGravity = false;
             Quaternion newGrav = SnapQuat(cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation);   //calculate new gravity and snap it
             
-        }*/
+            if(playerIntr.heldObject.GetComponent<GravityObject>())
+            {
+                playerIntr.heldObject.GetComponent<GravityObject>().gravityDirection = newGrav.eulerAngles;
+            }
+        }
     }
 
     //returns the quaternion necessary to level the camera's roll
@@ -144,7 +157,7 @@ public class CameraScript : MonoBehaviour
     //rotate the red line renderer to indicate gravity selection
     void ChangeLineRenderer()
     {
-        if (changingWorldRotation)
+        if (changingWorldRotation || changingObjectRotation)
         {
             axisLine.SetPosition(0, player.transform.position);
             axisLine.SetPosition(1, player.transform.position + cameraRotation * Quaternion.Inverse(grabAxis) * worldRotation * axisLineDefaultPos);
